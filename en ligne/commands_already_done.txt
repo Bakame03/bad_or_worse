@@ -1,0 +1,29 @@
+INSERT INTO commune (code_commune, nom_commune, num_dep)
+SELECT DISTINCT 
+    code_zone, 
+    lib_zone, 
+    SUBSTRING(code_zone, 1, 2) 
+FROM qualite_air
+WHERE type_zone = 'commune';
+======================================================
+SELECT * FROM commune LIMIT 10;
+======================================================
+SELECT 
+    lib_zone, 
+    code_zone, 
+    AVG(code_qual) AS moyenne
+FROM qualite_air
+WHERE type_zone = 'commune'
+GROUP BY lib_zone, code_zone
+ORDER BY moyenne DESC
+LIMIT 1;
+=====================================================
+SELECT 
+    lib_zone, 
+    code_zone, 
+    code_qual, 
+    AVG(code_qual) OVER (PARTITION BY lib_zone, code_zone) AS moyenne,
+    MAX(code_qual) OVER (PARTITION BY lib_zone, code_zone) AS maximum
+FROM qualite_air
+WHERE type_zone = 'commune';
+

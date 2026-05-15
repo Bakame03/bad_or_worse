@@ -1,0 +1,35 @@
+alright buddy here are the details of the teacher
+===================================================
+
+so the name of the SAE is "S2.04 Exploitation d’une base de données"
+
+here are other words that the teacher told us:
+"(- mettre le code sql de départ avec les autres requests
+- associer les villes au bon département
+"
+
+here are other words that the teacher told us:
+"bonjour à vous tous,
+
+Précision pour le rendu de la sae, vous devez me rendre, entre autre :
+partie 1 : 
+Le script du schéma de données (script de création des tables) issu de votre analyse Attention je veux un script qui fonctionne et qui contient les tables que je vous fournis cad les tables region, departement et la table d'origine qualite_air
+Le script de migration des données de la table qualite_air  vers les différentes tables issues de votre analyse. la aussi un script qui fonctionne avec les tables du script précédent.
+Je ne dois pas "bidouiller" vos scripts pour qu'ils fonctionnent, alors testez-les avec le serveur de votre binôme !!
+
+partie 2 : 
+les requêtes doivent fonctionner sur la bdd que vous avez créée ou sur la table  qualite_air  que je vous ai fourni, vous devez me dire sur la première de votre fichier quelle base je dois utiliser
+
+J'attends votre travail avant le mardi 19 mai midi dernier délai !
+
+Laurent  CARMIGNAC
+
+
+
+Dépôt de vos travaux en R2.06 Exploitation BD
+Due: Tuesday, 19 May 2026, 12:00 PM
+Vous devez me rendre un travail par binôme !
+Les dossiers devront être rendus avant le mardi 19 mai midi. (12h)
+
+Toute utilisation d'une quelconque IA sera sanctionnée par un 0 sur ma partie (R2.06 ..)
+"
