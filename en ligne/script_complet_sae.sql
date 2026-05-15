@@ -17,7 +17,7 @@ CREATE TABLE departement (
 );
 
 CREATE TABLE commune (
-    code_commune numeric(5,0) not null,
+    code_commune VARCHAR(5) not null,
     nom_commune  varchar null,
     num_dep      varchar not null,
     CONSTRAINT PK_COMMUNE PRIMARY KEY (code_commune),
@@ -33,7 +33,7 @@ CREATE TABLE qualite_air (
     date_dif    TIMESTAMP,
     source      VARCHAR,
     type_zone   VARCHAR,
-    code_zone   VARCHAR(5,0), 
+    code_zone   VARCHAR(5), 
     lib_zone    VARCHAR,
     code_no2    int,
     code_so2    int,
