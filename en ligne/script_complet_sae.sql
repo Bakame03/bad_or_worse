@@ -49,6 +49,7 @@ CREATE TABLE qualite_air (
     conc_o3     REAL,
     conc_pm10   REAL,
     conc_pm25   REAL 
+    CONSTRAINT FK_QUALITE_COMMUNE FOREIGN KEY (code_zone) REFERENCES commune (code_commune)
 );
 
 INSERT INTO region VALUES (1, 'Guadeloupe', NULL);
