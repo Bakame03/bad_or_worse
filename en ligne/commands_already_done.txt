@@ -46,5 +46,79 @@ GROUP BY d.num_dep, d.nom_departement
 ORDER BY classement;
 ===================================================
 4.
-
+SELECT 
+    c.num_dep, 
+    d.nom_departement,
+    c.nom_commune AS libelle_zone, 
+    MAX(q.conc_pm10) AS max_par_ville
+FROM qualite_air q
+JOIN commune c ON q.code_zone = c.code_commune
+JOIN departement d ON c.num_dep = d.num_dep
+WHERE d.nom_departement = 'Ain' AND q.type_zone = 'commune'
+GROUP BY c.num_dep, d.nom_departement, c.nom_commune
+ORDER BY max_par_ville DESC
+LIMIT 1;
+==================================================
+5.
+WITH ClassementVilles AS (
+    SELECT 
+        c.num_dep,
+        d.nom_departement AS nom_dep,
+        c.nom_commune AS libelle_zone,
+        MAX(q.conc_pm10) AS max_pm10_dep,
+        RANK() OVER(PARTITION BY c.num_dep ORDER BY MAX(q.conc_pm10) DESC) as rang
+    FROM qualite_air q
+    JOIN commune c ON q.code_zone = c.code_commune
+    JOIN departement d ON c.num_dep = d.num_dep
+    WHERE q.type_zone = 'commune'
+    GROUP BY c.num_dep, d.nom_departement, c.nom_commune
+)
+SELECT 
+    num_dep,
+    nom_dep,
+    libelle_zone,
+    max_pm10_dep
+FROM ClassementVilles
+WHERE rang = 1
+ORDER BY num_dep;
+=================================================
+6.
+SELECT 
+    c.num_dep, 
+    d.nom_departement,
+    SUM(CASE WHEN q.code_qual = 1 THEN 1 ELSE 0 END) AS "nb bon indice",
+    SUM(CASE WHEN q.code_pm10 = 1 THEN 1 ELSE 0 END) AS "nb bon indice de pm10",
+    SUM(CASE WHEN q.code_o3 = 1 THEN 1 ELSE 0 END) AS "nb bon indice de o3"
+FROM qualite_air q
+JOIN commune c ON q.code_zone = c.code_commune
+JOIN departement d ON c.num_dep = d.num_dep
+WHERE q.type_zone = 'commune'
+GROUP BY c.num_dep, d.nom_departement
+ORDER BY c.num_dep;
+================================================
+7.
+WITH ComptageIndices AS (
+    SELECT 
+        c.num_dep, 
+        d.nom_departement,
+        SUM(CASE WHEN q.code_qual = 1 THEN 1 ELSE 0 END) AS nb_bon_indice,
+        SUM(CASE WHEN q.code_pm10 = 1 THEN 1 ELSE 0 END) AS nb_bon_indice_pm10,
+        SUM(CASE WHEN q.code_o3 = 1 THEN 1 ELSE 0 END) AS nb_bon_indice_o3
+    FROM qualite_air q
+    JOIN commune c ON q.code_zone = c.code_commune
+    JOIN departement d ON c.num_dep = d.num_dep
+    WHERE q.type_zone = 'commune'
+    GROUP BY c.num_dep, d.nom_departement
+)
+SELECT 
+    num_dep,
+    nom_departement,
+    nb_bon_indice AS "nb bon indice",
+    RANK() OVER (ORDER BY nb_bon_indice DESC) AS rang_bon_indice,
+    nb_bon_indice_pm10 AS "nb bon indice de pm10",
+    RANK() OVER (ORDER BY nb_bon_indice_pm10 DESC) AS rang_bon_indice_pm10,
+    nb_bon_indice_o3 AS "nb bon indice de o3",
+    RANK() OVER (ORDER BY nb_bon_indice_o3 DESC) AS rang_bon_indice_o3
+FROM ComptageIndices
+ORDER BY num_dep;
 
