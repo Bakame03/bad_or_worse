@@ -18145,12 +18145,14 @@ insert into  temp_qualite_air values ( 17999,'2022/02/03 00:00:00+00',2,'Moyen',
 insert into  temp_qualite_air values ( 18000,'2022/02/03 00:00:00+00',2,'Moyen','vert','2022/02/04 12:28:13+00','Atmo Auvergne-Rhône-Alpes','commune',69389,'',2,1,1,1,2,NULL,NULL,NULL,NULL,66.35,53.23,38.32,14.47,10.44);
 
 INSERT INTO commune (code_commune, nom_commune, num_dep)
-SELECT DISTINCT 
-    code_zone, 
-    lib_zone, 
-    SUBSTRING(code_zone, 1, 2) 
+SELECT DISTINCT code_zone, lib_zone, SUBSTRING(code_zone, 1, 1) 
 FROM temp_qualite_air
-WHERE type_zone = 'commune';
+WHERE type_zone = 'commune' AND LENGTH(code_zone) = 4;
+
+INSERT INTO commune (code_commune, nom_commune, num_dep)
+SELECT DISTINCT code_zone, lib_zone, SUBSTRING(code_zone, 1, 2) 
+FROM temp_qualite_air
+WHERE type_zone = 'commune' AND LENGTH(code_zone) = 5;
 
 INSERT INTO qualite_air 
 SELECT * FROM temp_qualite_air;

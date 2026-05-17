@@ -8,6 +8,9 @@ WHERE type_zone = 'commune';
 ======================================================
 SELECT * FROM commune LIMIT 10;
 ======================================================
+Part 2
+------------------------------------------------------
+1.
 SELECT 
     lib_zone, 
     code_zone, 
@@ -18,6 +21,7 @@ GROUP BY lib_zone, code_zone
 ORDER BY moyenne DESC
 LIMIT 1;
 =====================================================
+2.
 SELECT 
     lib_zone, 
     code_zone, 
@@ -26,4 +30,21 @@ SELECT
     MAX(code_qual) OVER (PARTITION BY lib_zone, code_zone) AS maximum
 FROM qualite_air
 WHERE type_zone = 'commune';
+====================================================
+3.
+SELECT 
+    d.num_dep,
+    d.nom_departement,
+    AVG(q.code_qual) AS moyenne,
+    MAX(q.code_qual) AS maximum,
+    RANK() OVER (ORDER BY AVG(q.code_qual) ASC) AS classement
+FROM qualite_air q
+JOIN commune c ON q.code_zone = c.code_commune
+JOIN departement d ON c.num_dep = d.num_dep
+WHERE q.type_zone = 'commune'
+GROUP BY d.num_dep, d.nom_departement
+ORDER BY classement;
+===================================================
+4.
+
 
