@@ -121,6 +121,33 @@ insert into departement (num_dep,nom_departement,id_region) values ('13','Bouche
 insert into departement (num_dep,nom_departement,id_region) values ('83','Var',93);
 insert into departement (num_dep,nom_departement,id_region) values ('84','Vaucluse',93);
 
+CREATE TABLE temp_qualite_air (
+    OBJECTID    int primary key,
+    date_ech    TIMESTAMP,
+    code_qual   int,
+    lib_qual    VARCHAR,
+    coul_qual   VARCHAR,
+    date_dif    TIMESTAMP,
+    source      VARCHAR,
+    type_zone   VARCHAR,
+    code_zone   VARCHAR(5), 
+    lib_zone    VARCHAR,
+    code_no2    int,
+    code_so2    int,
+    code_o3     int,
+    code_pm10   int,
+    code_pm25   int,
+    x_wgs84     REAL,
+    y_wgs84     REAL,
+    x_reg       REAL,
+    y_reg       REAL,
+    conc_no2    REAL,
+    conc_so2    REAL,
+    conc_o3     REAL,
+    conc_pm10   REAL,
+    conc_pm25   REAL
+);
+
 insert into  qualite_air values ( 1,'2022/02/06 00:00:00+00',2,'Moyen','vert','2022/02/04 12:26:13+00','Atmo Auvergne-Rhône-Alpes','commune',42001,'Aboën',1,1,2,1,1,4.131637723,45.41361074,788511,6479988.6,4.27,0.19,80.55,9.47,5.05);
 insert into  qualite_air values ( 2,'2022/02/05 00:00:00+00',2,'Moyen','vert','2022/02/04 12:26:13+00','Atmo Auvergne-Rhône-Alpes','commune',42001,'Aboën',1,1,2,1,1,4.131637723,45.41361074,788511,6479988.6,7.48,0.23,82.6,12.12,7.02);
 insert into  qualite_air values ( 3,'2022/02/04 00:00:00+00',2,'Moyen','vert','2022/02/04 12:26:13+00','Atmo Auvergne-Rhône-Alpes','commune',42001,'Aboën',1,1,2,1,1,4.131637723,45.41361074,788511,6479988.6,7.5,0.44,65.21,13.86,8.23);
@@ -18122,5 +18149,10 @@ SELECT DISTINCT
     code_zone, 
     lib_zone, 
     SUBSTRING(code_zone, 1, 2) 
-FROM qualite_air
+FROM temp_qualite_air
 WHERE type_zone = 'commune';
+
+INSERT INTO qualite_air 
+SELECT * FROM temp_qualite_air;
+
+DROP TABLE temp_qualite_air;
