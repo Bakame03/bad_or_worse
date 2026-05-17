@@ -1,3 +1,5 @@
+SET search_path = SAE_qualite_air;
+
 INSERT INTO region VALUES (1, 'Guadeloupe', NULL);
 INSERT INTO region VALUES (2, 'Martinique', NULL);
 INSERT INTO region VALUES (3, 'Guyane', NULL);
@@ -118,7 +120,7 @@ insert into departement (num_dep,nom_departement,id_region) values ('6','Alpes-M
 insert into departement (num_dep,nom_departement,id_region) values ('13','Bouches-du-Rhône',93);
 insert into departement (num_dep,nom_departement,id_region) values ('83','Var',93);
 insert into departement (num_dep,nom_departement,id_region) values ('84','Vaucluse',93);
-	
+
 insert into  qualite_air values ( 1,'2022/02/06 00:00:00+00',2,'Moyen','vert','2022/02/04 12:26:13+00','Atmo Auvergne-Rhône-Alpes','commune',42001,'Aboën',1,1,2,1,1,4.131637723,45.41361074,788511,6479988.6,4.27,0.19,80.55,9.47,5.05);
 insert into  qualite_air values ( 2,'2022/02/05 00:00:00+00',2,'Moyen','vert','2022/02/04 12:26:13+00','Atmo Auvergne-Rhône-Alpes','commune',42001,'Aboën',1,1,2,1,1,4.131637723,45.41361074,788511,6479988.6,7.48,0.23,82.6,12.12,7.02);
 insert into  qualite_air values ( 3,'2022/02/04 00:00:00+00',2,'Moyen','vert','2022/02/04 12:26:13+00','Atmo Auvergne-Rhône-Alpes','commune',42001,'Aboën',1,1,2,1,1,4.131637723,45.41361074,788511,6479988.6,7.5,0.44,65.21,13.86,8.23);
@@ -18114,3 +18116,11 @@ insert into  qualite_air values ( 17997,'2022/02/03 00:00:00+00',2,'Moyen','vert
 insert into  qualite_air values ( 17998,'2022/02/03 00:00:00+00',2,'Moyen','vert','2022/02/04 12:28:13+00','Atmo Auvergne-Rhône-Alpes','commune',69387,'',2,1,1,1,2,NULL,NULL,NULL,NULL,71.22,49.84,33.2,16.09,11.18);
 insert into  qualite_air values ( 17999,'2022/02/03 00:00:00+00',2,'Moyen','vert','2022/02/04 12:28:13+00','Atmo Auvergne-Rhône-Alpes','commune',69388,'',2,1,1,1,2,NULL,NULL,NULL,NULL,63.57,36.44,31.59,15.48,10.73);
 insert into  qualite_air values ( 18000,'2022/02/03 00:00:00+00',2,'Moyen','vert','2022/02/04 12:28:13+00','Atmo Auvergne-Rhône-Alpes','commune',69389,'',2,1,1,1,2,NULL,NULL,NULL,NULL,66.35,53.23,38.32,14.47,10.44);
+
+INSERT INTO commune (code_commune, nom_commune, num_dep)
+SELECT DISTINCT 
+    code_zone, 
+    lib_zone, 
+    SUBSTRING(code_zone, 1, 2) 
+FROM qualite_air
+WHERE type_zone = 'commune';
