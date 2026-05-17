@@ -48,7 +48,7 @@ CREATE TABLE qualite_air (
     conc_so2    REAL,
     conc_o3     REAL,
     conc_pm10   REAL,
-    conc_pm25   REAL 
+    conc_pm25   REAL,
     CONSTRAINT FK_QUALITE_COMMUNE FOREIGN KEY (code_zone) REFERENCES commune (code_commune)
 );
 
